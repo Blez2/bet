@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App'; // Import the main App component
+import App from './App'; // Ensure the path to App.js is correct
+import './index.css'; // Optional, only if you have global styles
 
-// Render the App component into the root div in index.html
 ReactDOM.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root') // Must match the "root" ID in index.html
 );

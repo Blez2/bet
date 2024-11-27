@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 require('dotenv').config();
 
 // Import backend routes
@@ -19,16 +20,17 @@ mongoose
   .then(() => console.log('Connected to MongoDB'))
   .catch((error) => {
     console.error('Error connecting to MongoDB:', error.message);
-    process.exit(1); // Exit process if MongoDB connection fails
+    process.exit(1);
   });
 
 // Middleware
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(express.json());
 
 // API Routes
-app.use('/api/auth', authRouter); // General authentication routes
-app.use('/api/auths', authsRouter); // User-related routes
-app.use('/api/bets', betsRouter); // Betting-related routes
+app.use('/api/auth', authRouter);
+app.use('/api/auths', authsRouter);
+app.use('/api/bets', betsRouter);
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
