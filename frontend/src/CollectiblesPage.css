@@ -8,6 +8,9 @@
     max-width: 1000px;
     margin: 0 auto;
     transition: box-shadow var(--transition-default);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
   }
   
   .collectibles-page:hover {

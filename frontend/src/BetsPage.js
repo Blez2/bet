@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './BetsPage.css';
+import { motion } from 'framer-motion';
 
 const BetsPage = () => {
   const [bets, setBets] = useState([]);
@@ -52,18 +53,41 @@ const BetsPage = () => {
     }
   };
 
+  const pageVariants = {
+    initial: { opacity: 0, x: -50 },
+    in: { opacity: 1, x: 0 },
+    out: { opacity: 0, x: 50 },
+  };
+
+  const pageTransition = {
+    type: 'tween',
+    ease: 'anticipate',
+    duration: 0.5,
+  };
+
   return (
-    <div className="bets-page">
+    <motion.div
+      className="bets-page"
+      initial="initial"
+      animate="in"
+      exit="out"
+      variants={pageVariants}
+      transition={pageTransition}
+    >
       <h1>Bets Page</h1>
       <h2>Welcome, {user.username}</h2>
       <ul className="bets-list">
         {bets.map((bet) => (
-          <li key={bet._id} className="bet-item">
+          <motion.li
+            key={bet._id}
+            className="bet-item"
+            whileHover={{ scale: 1.02, boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}
+          >
             <p><strong>Event:</strong> {bet.event?.name || 'Unknown'}</p>
             <p><strong>Odds:</strong> {bet.odds}</p>
             <p><strong>Amount:</strong> ${bet.amount}</p>
             <p><strong>Status:</strong> {bet.status}</p>
-          </li>
+          </motion.li>
         ))}
       </ul>
       <form onSubmit={handlePlaceBet} className="bet-form">
@@ -100,9 +124,15 @@ const BetsPage = () => {
             placeholder="Enter Odds"
           />
         </label>
-        <button type="submit">Place Bet</button>
+        <motion.button
+          type="submit"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          Place Bet
+        </motion.button>
       </form>
-    </div>
+    </motion.div>
   );
 };
 

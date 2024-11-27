@@ -1,15 +1,15 @@
 /* frontend/src/index.css */
 
 :root {
-  /* Color Palette */
-  --color-primary: #1E3A8A; /* Indigo */
-  --color-secondary: #F59E0B; /* Amber */
-  --color-accent: #10B981; /* Emerald */
-  --color-background: #F3F4F6; /* Gray-100 */
-  --color-text: #111827; /* Gray-900 */
-  --color-light-text: #6B7280; /* Gray-500 */
-  --color-error: #EF4444; /* Red-500 */
-  --color-success: #10B981; /* Green-500 */
+  /* Updated Color Palette */
+  --color-primary: #4B0082; /* Indigo */
+  --color-secondary: #800080; /* Purple */
+  --color-accent: #9400D3; /* Dark Violet */
+  --color-background: #0c0b0b; /* Black */
+  --color-text: #FFFFFF; /* White */
+  --color-light-text: #D3D3D3; /* Light Gray */
+  --color-error: #50413c; /* Orange Red */
+  --color-success: #32CD32; /* Lime Green */
 
   /* Typography */
   --font-primary: 'Montserrat', sans-serif;
@@ -38,6 +38,9 @@ body {
   background-color: var(--color-background);
   color: var(--color-text);
   padding-top: 80px; /* To accommodate fixed navbar */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 a {
@@ -71,23 +74,33 @@ button {
 }
 
 button:disabled {
-  background-color: #ccc;
+  background-color: #555555;
   cursor: not-allowed;
+}
+
+button:active {
+  transform: scale(0.98);
 }
 
 /* Input Fields */
 input, select, textarea {
   font-family: var(--font-secondary);
-  border: 1px solid #ccc;
+  border: 1px solid #555555;
   border-radius: var(--radius-sm);
   padding: var(--spacing-xs) var(--spacing-sm);
   transition: border-color var(--transition-default), box-shadow var(--transition-default);
   font-size: 1rem;
+  background-color: #1a1a1a;
+  color: var(--color-text);
+}
+
+input::placeholder, select::placeholder, textarea::placeholder {
+  color: var(--color-light-text);
 }
 
 input:focus, select:focus, textarea:focus {
   border-color: var(--color-secondary);
-  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+  box-shadow: 0 0 0 2px rgba(128, 0, 128, 0.5); /* Purple Shadow */
   outline: none;
 }
 
@@ -108,18 +121,46 @@ form {
   gap: var(--spacing-md);
 }
 
-/* frontend/src/index.css */
-
-button:active {
-  transform: scale(0.98);
+/* Flex Utilities */
+.flex {
+  display: flex;
 }
 
-/* frontend/src/index.css */
-
-.navbar-link,
-.bet-item,
-.collectible-item,
-.user-avatar {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.flex-row {
+  flex-direction: row;
 }
 
+.flex-col {
+  flex-direction: column;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.align-start {
+  align-items: flex-start;
+}
+
+.gap-2 {
+  gap: 8px;
+}
+
+.gap-4 {
+  gap: 16px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  body {
+    padding-top: 60px;
+  }
+}

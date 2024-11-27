@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './UserProfilePage.css';
+import { motion } from 'framer-motion';
 
 const UserProfilePage = () => {
   const [user, setUser] = useState({});
@@ -19,10 +20,35 @@ const UserProfilePage = () => {
     fetchUser();
   }, []);
 
+  const pageVariants = {
+    initial: { opacity: 0, scale: 0.95 },
+    in: { opacity: 1, scale: 1 },
+    out: { opacity: 0, scale: 1.05 },
+  };
+
+  const pageTransition = {
+    type: 'spring',
+    stiffness: 300,
+    damping: 20,
+  };
+
   return (
-    <div className="user-profile-page">
+    <motion.div
+      className="user-profile-page"
+      initial="initial"
+      animate="in"
+      exit="out"
+      variants={pageVariants}
+      transition={pageTransition}
+    >
       {user.avatarUrl && (
-        <img src={user.avatarUrl} alt={user.username} className="user-avatar" />
+        <motion.img
+          src={user.avatarUrl}
+          alt={user.username}
+          className="user-avatar"
+          whileHover={{ scale: 1.1 }}
+          transition={{ duration: 0.3 }}
+        />
       )}
       <h1>User Profile</h1>
       <div className="user-details">
@@ -36,7 +62,7 @@ const UserProfilePage = () => {
           <span>Balance:</span> ${user.balance}
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
