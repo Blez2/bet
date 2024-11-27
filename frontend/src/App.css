@@ -1,7 +1,18 @@
+/* frontend/src/App.css */
+
 .App {
   text-align: center;
 }
 
+.content {
+  padding-top: 80px;
+  padding-bottom: 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  animation: fadeIn 0.5s ease-in-out;
+}
+/* Existing styles */
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -34,5 +45,14 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

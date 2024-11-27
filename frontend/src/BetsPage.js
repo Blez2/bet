@@ -1,5 +1,8 @@
+// frontend/src/BetsPage.js
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './BetsPage.css';
 
 const BetsPage = () => {
   const [bets, setBets] = useState([]);
@@ -50,26 +53,28 @@ const BetsPage = () => {
   };
 
   return (
-    <div>
+    <div className="bets-page">
       <h1>Bets Page</h1>
-      <h2>User: {user.username}</h2>
-      <ul>
+      <h2>Welcome, {user.username}</h2>
+      <ul className="bets-list">
         {bets.map((bet) => (
-          <li key={bet._id}>
-            <p>Event: {bet.event?.name || 'Unknown'}</p>
-            <p>Odds: {bet.odds}</p>
-            <p>Amount: {bet.amount}</p>
-            <p>Status: {bet.status}</p>
+          <li key={bet._id} className="bet-item">
+            <p><strong>Event:</strong> {bet.event?.name || 'Unknown'}</p>
+            <p><strong>Odds:</strong> {bet.odds}</p>
+            <p><strong>Amount:</strong> ${bet.amount}</p>
+            <p><strong>Status:</strong> {bet.status}</p>
           </li>
         ))}
       </ul>
-      <form onSubmit={handlePlaceBet}>
+      <form onSubmit={handlePlaceBet} className="bet-form">
         <label>
           Event ID:
           <input
             type="text"
             value={eventId}
             onChange={(e) => setEventId(e.target.value)}
+            required
+            placeholder="Enter Event ID"
           />
         </label>
         <label>
@@ -78,6 +83,9 @@ const BetsPage = () => {
             type="number"
             value={betAmount}
             onChange={(e) => setBetAmount(e.target.value)}
+            required
+            min="1"
+            placeholder="Enter Amount"
           />
         </label>
         <label>
@@ -87,6 +95,9 @@ const BetsPage = () => {
             step="0.01"
             value={betOdds}
             onChange={(e) => setBetOdds(e.target.value)}
+            required
+            min="1"
+            placeholder="Enter Odds"
           />
         </label>
         <button type="submit">Place Bet</button>

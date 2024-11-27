@@ -1,0 +1,81 @@
+/* frontend/src/CollectiblesPage.css */
+
+.collectibles-page {
+    background-color: #ffffff;
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
+    margin: 0 auto;
+    transition: box-shadow var(--transition-default);
+  }
+  
+  .collectibles-page:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .collectibles-page h1 {
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-primary);
+    text-align: center;
+  }
+  
+  .collectibles-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+  }
+  
+  .collectible-item {
+    background-color: #f9f9f9;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform var(--transition-default), box-shadow var(--transition-default);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .collectible-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .collectible-item img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--spacing-sm);
+    transition: transform var(--transition-default);
+  }
+  
+  .collectible-item img:hover {
+    transform: scale(1.05);
+  }
+  
+  .collectible-item h3 {
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-secondary);
+    font-size: 1.2rem;
+  }
+  
+  .collectible-item p {
+    color: var(--color-light-text);
+    font-size: 0.95rem;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .collectibles-page {
+      padding: var(--spacing-md);
+    }
+  
+    .collectibles-list {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+  }
+  

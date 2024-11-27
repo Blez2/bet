@@ -1,18 +1,27 @@
+// frontend/src/App.js
+
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import BetsPage from './src/BetsPage';
-import UserProfilePage from './src/UserProfilePage';
-import CollectiblesPage from './src/CollectiblesPage';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Navbar from './Navbar';
+import Footer from './Footer';
+import BetsPage from './BetsPage';
+import UserProfilePage from './UserProfilePage';
+import CollectiblesPage from './CollectiblesPage';
+import './App.css';
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Switch>
-        <Route path="/bets" component={BetsPage} />
-        <Route path="/profile" component={UserProfilePage} />
-        <Route path="/collectibles" component={CollectiblesPage} />
-        <Route path="/" exact render={() => <h1>Welcome to the React Betting App</h1>} />
-      </Switch>
+      <Navbar />
+      <div className="content">
+        <Routes>
+          <Route path="/bets" element={<BetsPage />} />
+          <Route path="/profile" element={<UserProfilePage />} />
+          <Route path="/collectibles" element={<CollectiblesPage />} />
+          <Route path="/" element={<h1>Welcome to the React Betting App</h1>} />
+        </Routes>
+      </div>
+      <Footer />
     </BrowserRouter>
   );
 };

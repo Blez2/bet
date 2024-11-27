@@ -1,0 +1,138 @@
+/* frontend/src/BetsPage.css */
+
+.bets-page {
+    background-color: #ffffff;
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+    transition: box-shadow var(--transition-default);
+  }
+  
+  .bets-page:hover {
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  .bets-page h1 {
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-primary);
+    text-align: center;
+  }
+  
+  .bets-page h2 {
+    margin-bottom: var(--spacing-md);
+    color: var(--color-secondary);
+    text-align: center;
+  }
+  
+  .bets-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .bet-item {
+    background-color: #f9f9f9;
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform var(--transition-default), box-shadow var(--transition-default);
+    cursor: pointer;
+  }
+  
+  .bet-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .bet-item p {
+    margin: 0.5rem 0;
+    color: var(--color-light-text);
+    font-size: 0.95rem;
+  }
+  
+  .bet-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    background-color: #f9f9f9;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: box-shadow var(--transition-default);
+  }
+  
+  .bet-form:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .bet-form label {
+    display: flex;
+    flex-direction: column;
+    color: var(--color-text);
+    font-weight: 500;
+    font-size: 1rem;
+  }
+  
+  .bet-form input {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid #ccc;
+    border-radius: var(--radius-sm);
+    margin-top: 0.5rem;
+    transition: border-color var(--transition-default), box-shadow var(--transition-default);
+    font-size: 1rem;
+  }
+  
+  .bet-form input:focus {
+    border-color: var(--color-secondary);
+    box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+    outline: none;
+  }
+  
+  .bet-form button {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--color-accent);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color var(--transition-default), transform var(--transition-default);
+  }
+  
+  .bet-form button:hover {
+    background-color: #059669; /* Darker Emerald */
+    transform: translateY(-2px);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .bets-page {
+      padding: var(--spacing-md);
+    }
+  
+    .bet-form {
+      padding: var(--spacing-sm);
+    }
+  }
+
+  /* Example: frontend/src/BetsPage.css */
+
+.bet-form button {
+    background-color: var(--color-accent);
+    color: #fff;
+    font-weight: 600;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-sm);
+    transition: background-color var(--transition-default), transform var(--transition-default);
+  }
+  
+  .bet-form button:hover {
+    background-color: #059669; /* Darker Emerald */
+    transform: translateY(-2px);
+  }
+  
+  
