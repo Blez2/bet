@@ -1,7 +1,7 @@
 // frontend/src/UserProfilePage.js
 
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from './axiosConfig';
 import './UserProfilePage.css';
 import { motion } from 'framer-motion';
 

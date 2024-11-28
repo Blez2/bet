@@ -1,3 +1,5 @@
+// src/index.js
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -5,7 +7,6 @@ require('dotenv').config();
 
 // Import backend routes
 const authRouter = require('./routes/auth');
-const authsRouter = require('./routes/auths');
 const betsRouter = require('./routes/bets');
 
 const app = express();
@@ -29,7 +30,6 @@ app.use(express.json());
 
 // API Routes
 app.use('/api/auth', authRouter);
-app.use('/api/auths', authsRouter);
 app.use('/api/bets', betsRouter);
 
 // Error Handling Middleware

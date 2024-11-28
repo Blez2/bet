@@ -1,7 +1,7 @@
 // frontend/src/CollectiblesPage.js
 
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from './axiosConfig';
 import './CollectiblesPage.css';
 import { motion } from 'framer-motion';
 
