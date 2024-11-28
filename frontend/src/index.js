@@ -6,13 +6,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AnimatePresence } from 'framer-motion';
+import { AuthProvider } from './context/AuthContext'; // Import AuthProvider
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <AnimatePresence mode="wait">
-      <App />
-    </AnimatePresence>
+    <AuthProvider> {/* Wrap App with AuthProvider */}
+      <AnimatePresence mode="wait">
+        <App />
+      </AnimatePresence>
+    </AuthProvider>
   </React.StrictMode>
 );
 

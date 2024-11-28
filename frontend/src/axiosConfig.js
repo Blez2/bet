@@ -11,9 +11,6 @@ const axiosInstance = axios.create({
   },
 });
 
-// Request interceptor is no longer needed to set Authorization headers manually
-// since the token is stored in HTTP-only cookies and automatically sent with requests
-
 // Response interceptor to handle errors globally
 axiosInstance.interceptors.response.use(
   (response) => response,

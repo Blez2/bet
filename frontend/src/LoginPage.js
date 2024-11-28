@@ -1,10 +1,11 @@
 // frontend/src/LoginPage.js
 
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import './LoginPage.css';
 import axios from './axiosConfig';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { AuthContext } from './context/AuthContext'; // Import AuthContext
 
 const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(true); // Toggle between Login and Signup
@@ -16,6 +17,13 @@ const LoginPage = () => {
   });
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { user, setUser } = useContext(AuthContext); // Consume AuthContext
+
+  useEffect(() => {
+    if (user) {
+      navigate('/bets'); // Redirect authenticated users to Bets page
+    }
+  }, [user, navigate]);
 
   const toggleMode = () => {
     setIsLogin(!isLogin);
@@ -37,25 +45,27 @@ const LoginPage = () => {
     e.preventDefault();
     setError('');
     try {
+      let response;
       if (isLogin) {
         // Login Request
-        await axios.post('/auth/login', {
+        response = await axios.post('/api/auth/login', { // Ensure the correct API path
           email: formData.email,
           password: formData.password,
         });
-        // No need to store token manually since it's handled via cookies
-        navigate('/'); // Redirect to home or dashboard
       } else {
         // Signup Request
-        await axios.post('/auth/register', {
+        response = await axios.post('/api/auth/register', { // Ensure the correct API path
           username: formData.username,
           email: formData.email,
           password: formData.password,
           balance: formData.balance,
         });
-        // No need to store token manually
-        navigate('/'); // Redirect to home or dashboard
       }
+
+      // Assuming response.data.user contains the user
+      setUser(response.data.user); // Set user in AuthContext
+
+      navigate('/bets'); // Redirect to Bets page
     } catch (err) {
       setError(err.response?.data?.error || 'An error occurred. Please try again.');
     }

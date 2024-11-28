@@ -7,10 +7,12 @@ import Footer from './Footer';
 import BetsPage from './BetsPage';
 import UserProfilePage from './UserProfilePage';
 import CollectiblesPage from './CollectiblesPage';
-import LandingPage from './LandingPage'; // Import LandingPage
-import LoginPage from './LoginPage'; // Import LoginPage
+import LandingPage from './LandingPage';
+import LoginPage from './LoginPage';
 import { AnimatePresence } from 'framer-motion';
 import './App.css';
+import { AuthProvider } from './context/AuthContext'; // Import AuthProvider
+import PrivateRoute from './components/PrivateRoute'; // Import PrivateRoute
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -19,10 +21,31 @@ const AnimatedRoutes = () => {
     <AnimatePresence mode="wait">
       <Routes key={location.pathname} location={location}>
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/bets" element={<BetsPage />} />
-        <Route path="/profile" element={<UserProfilePage />} />
-        <Route path="/collectibles" element={<CollectiblesPage />} />
-        <Route path="/" element={<LandingPage />} /> {/* Set LandingPage as Home */}
+        <Route
+          path="/bets"
+          element={
+            <PrivateRoute>
+              <BetsPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <UserProfilePage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/collectibles"
+          element={
+            <PrivateRoute>
+              <CollectiblesPage />
+            </PrivateRoute>
+          }
+        />
+        <Route path="/" element={<LandingPage />} />
         <Route path="*" element={<h1>404: Page Not Found</h1>} />
       </Routes>
     </AnimatePresence>
@@ -31,13 +54,15 @@ const AnimatedRoutes = () => {
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Navbar />
-      <div className="content">
-        <AnimatedRoutes />
-      </div>
-      <Footer />
-    </BrowserRouter>
+    <AuthProvider> {/* Wrap the app with AuthProvider */}
+      <BrowserRouter>
+        <Navbar />
+        <div className="content">
+          <AnimatedRoutes />
+        </div>
+        <Footer />
+      </BrowserRouter>
+    </AuthProvider>
   );
 };
 
