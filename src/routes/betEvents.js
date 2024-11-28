@@ -7,13 +7,14 @@ const router = express.Router();
 
 // Get all open bet events
 router.get('/', auth, async (req, res) => {
-  try {
-    const betEvents = await BetEvent.find({ status: 'open' });
-    res.send(betEvents);
-  } catch (error) {
-    res.status(500).send({ error: error.message });
-  }
-});
+    try {
+      const betEvents = await BetEvent.find({ status: 'open' });
+      res.send(betEvents);
+    } catch (error) {
+      console.error('Error fetching bet events:', error); // Log the full error
+      res.status(500).send({ error: error.message || 'Failed to fetch bet events' });
+    }
+  });
 
 // Place a bet on a bet event
 router.post('/:eventId/bets', auth, async (req, res) => {
@@ -47,17 +48,16 @@ router.post('/:eventId/bets', auth, async (req, res) => {
     req.user.balance -= amount;
     await req.user.save();
 
-    // Create a new bet
-    const Bet = require('../models/Bet');
-    const bet = new Bet({
+    // Add the bet to the event
+    const bet = {
       user: req.user._id,
       amount,
       odds: betEvent.odds.get(option),
-      event: betEvent._id,
       option,
-    });
+    };
 
-    await bet.save();
+    betEvent.bets.push(bet);
+    await betEvent.save();
 
     res.status(201).send({ message: 'Bet placed successfully.', bet });
   } catch (error) {
