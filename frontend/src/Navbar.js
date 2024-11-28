@@ -5,29 +5,19 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { FaHome, FaDollarSign, FaGem, FaUser, FaSignOutAlt } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import './Navbar.css';
+import axios from './axiosConfig'; // Import axios
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const token = localStorage.getItem('token'); // Simple token retrieval
+  const token = document.cookie.includes('token='); // Simple token check
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/login');
-  };
-
-  const linkVariants = {
-    hover: {
-      scale: 1.05,
-      backgroundColor: 'rgba(255, 255, 255, 0.1)',
-      transition: {
-        duration: 0.3,
-        type: 'spring',
-        stiffness: 300,
-      },
-    },
-    tap: {
-      scale: 0.95,
-    },
+  const handleLogout = async () => {
+    try {
+      await axios.post('/auth/logout'); // Logout route
+      navigate('/login');
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
   };
 
   return (

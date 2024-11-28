@@ -3,6 +3,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const cookieParser = require('cookie-parser'); // Import cookie-parser
 require('dotenv').config();
 
 // Import backend routes
@@ -25,7 +26,11 @@ mongoose
   });
 
 // Middleware
-app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(cookieParser()); // Use cookie-parser before other middlewares
+app.use(cors({
+  origin: 'http://localhost:3000', // Frontend URL
+  credentials: true, // Allow cookies to be sent
+}));
 app.use(express.json());
 
 // API Routes

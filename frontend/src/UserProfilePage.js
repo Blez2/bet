@@ -7,14 +7,16 @@ import { motion } from 'framer-motion';
 
 const UserProfilePage = () => {
   const [user, setUser] = useState({});
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get('/api/auths/me');
+        const response = await axios.get('/auth/me'); // Corrected endpoint
         setUser(response.data);
       } catch (error) {
         console.error('Error fetching user:', error);
+        setError('Failed to fetch user information. Please try again.');
       }
     };
     fetchUser();
@@ -41,6 +43,8 @@ const UserProfilePage = () => {
       variants={pageVariants}
       transition={pageTransition}
     >
+      {error && <p className="error-message">{error}</p>}
+      
       {user.avatarUrl && (
         <motion.img
           src={user.avatarUrl}

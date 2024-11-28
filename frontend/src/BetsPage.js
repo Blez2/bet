@@ -11,14 +11,17 @@ const BetsPage = () => {
   const [betAmount, setBetAmount] = useState('');
   const [betOdds, setBetOdds] = useState('');
   const [eventId, setEventId] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   useEffect(() => {
     const fetchBets = async () => {
       try {
-        const response = await axios.get('/api/bets/me');
+        const response = await axios.get('/bets/me'); // Corrected endpoint
         setBets(response.data);
       } catch (error) {
         console.error('Error fetching bets:', error);
+        setError('Failed to fetch your bets. Please try again.');
       }
     };
     fetchBets();
@@ -27,10 +30,11 @@ const BetsPage = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get('/api/auths/me');
+        const response = await axios.get('/auth/me'); // Corrected endpoint
         setUser(response.data);
       } catch (error) {
         console.error('Error fetching user:', error);
+        setError('Failed to fetch user information. Please try again.');
       }
     };
     fetchUser();
@@ -38,18 +42,22 @@ const BetsPage = () => {
 
   const handlePlaceBet = async (e) => {
     e.preventDefault();
+    setError('');
+    setSuccess('');
     try {
-      const response = await axios.post('/api/bets', {
-        amount: betAmount,
-        odds: betOdds,
+      const response = await axios.post('/bets', {
+        amount: Number(betAmount),
+        odds: Number(betOdds),
         event: eventId,
       });
       setBets([...bets, response.data]);
       setBetAmount('');
       setBetOdds('');
       setEventId('');
+      setSuccess('Bet placed successfully!');
     } catch (error) {
       console.error('Error placing bet:', error);
+      setError(error.response?.data?.error || 'Failed to place bet. Please try again.');
     }
   };
 
@@ -76,6 +84,10 @@ const BetsPage = () => {
     >
       <h1>Bets Page</h1>
       <h2>Welcome, {user.username}</h2>
+      
+      {error && <p className="error-message">{error}</p>}
+      {success && <p className="success-message">{success}</p>}
+
       <ul className="bets-list">
         {bets.map((bet) => (
           <motion.li
@@ -90,6 +102,7 @@ const BetsPage = () => {
           </motion.li>
         ))}
       </ul>
+      
       <form onSubmit={handlePlaceBet} className="bet-form">
         <label>
           Event ID:

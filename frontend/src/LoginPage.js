@@ -39,23 +39,21 @@ const LoginPage = () => {
     try {
       if (isLogin) {
         // Login Request
-        const response = await axios.post('/api/auth/login', {
+        await axios.post('/auth/login', {
           email: formData.email,
           password: formData.password,
         });
-        // Store token (you might want to use a better storage strategy)
-        localStorage.setItem('token', response.data.token);
+        // No need to store token manually since it's handled via cookies
         navigate('/'); // Redirect to home or dashboard
       } else {
         // Signup Request
-        const response = await axios.post('/api/auth/register', {
+        await axios.post('/auth/register', {
           username: formData.username,
           email: formData.email,
           password: formData.password,
           balance: formData.balance,
         });
-        // Store token
-        localStorage.setItem('token', response.data.token);
+        // No need to store token manually
         navigate('/'); // Redirect to home or dashboard
       }
     } catch (err) {
