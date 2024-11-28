@@ -3,28 +3,28 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from '../axiosConfig';
 
-// Create the AuthContext with default values
 export const AuthContext = createContext({
   user: null,
   setUser: () => {},
   loading: true,
 });
 
-// AuthProvider component to wrap around the app
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null); // User state
-  const [loading, setLoading] = useState(true); // Loading state to handle initial fetch
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch the current user on component mount
     const fetchUser = async () => {
       try {
-        const response = await axios.get('/auth/me'); // API call to get user info
-        setUser(response.data); // Set user data
+        const response = await axios.get('/auth/me');
+        setUser(response.data);
+        console.log('User fetched:', response.data);
       } catch (error) {
-        setUser(null); // If not authenticated, set user to null
+        setUser(null);
+        console.log('No authenticated user.');
       } finally {
-        setLoading(false); // Set loading to false after fetch
+        setLoading(false);
+        console.log('Loading set to false');
       }
     };
     fetchUser();

@@ -75,6 +75,7 @@ router.get('/me', auth, async (req, res) => {
   }
 });
 
+// User Logout
 router.post('/logout', auth, async (req, res) => {
   try {
     // Clear the token cookie by setting it to an empty value and expiring it immediately

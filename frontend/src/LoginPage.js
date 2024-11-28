@@ -6,6 +6,7 @@ import axios from './axiosConfig';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { AuthContext } from './context/AuthContext'; // Import AuthContext
+import { toast } from 'react-toastify'; // Import toast
 
 const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(true); // Toggle between Login and Signup
@@ -17,13 +18,14 @@ const LoginPage = () => {
   });
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { user, setUser } = useContext(AuthContext); // Consume AuthContext
+  const { user, setUser, loading } = useContext(AuthContext); // Consume AuthContext
 
   useEffect(() => {
-    if (user) {
-      navigate('/bets'); // Redirect authenticated users to Bets page
+    if (!loading && user) {
+      // If user is already logged in, redirect to /bets
+      navigate('/bets');
     }
-  }, [user, navigate]);
+  }, [user, navigate, loading]);
 
   const toggleMode = () => {
     setIsLogin(!isLogin);
@@ -48,13 +50,13 @@ const LoginPage = () => {
       let response;
       if (isLogin) {
         // Login Request
-        response = await axios.post('/api/auth/login', { // Ensure the correct API path
+        response = await axios.post('/auth/login', {
           email: formData.email,
           password: formData.password,
         });
       } else {
         // Signup Request
-        response = await axios.post('/api/auth/register', { // Ensure the correct API path
+        response = await axios.post('/auth/register', {
           username: formData.username,
           email: formData.email,
           password: formData.password,
@@ -64,10 +66,15 @@ const LoginPage = () => {
 
       // Assuming response.data.user contains the user
       setUser(response.data.user); // Set user in AuthContext
+      console.log('User state updated:', response.data.user);
+
+      toast.success(isLogin ? 'Logged in successfully!' : 'Registered successfully!');
 
       navigate('/bets'); // Redirect to Bets page
     } catch (err) {
       setError(err.response?.data?.error || 'An error occurred. Please try again.');
+      console.error('Login/Signup error:', err);
+      toast.error(err.response?.data?.error || 'An error occurred. Please try again.');
     }
   };
 
@@ -80,6 +87,11 @@ const LoginPage = () => {
   const pageTransition = {
     duration: 0.5,
   };
+
+  if (loading) {
+    // Optionally, display a loading spinner while fetching user data
+    return <div>Loading...</div>;
+  }
 
   return (
     <motion.div

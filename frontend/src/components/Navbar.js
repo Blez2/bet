@@ -1,26 +1,32 @@
-// frontend/src/Navbar.js
+// frontend/src/components/Navbar.js
 
 import React, { useContext } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { FaHome, FaDollarSign, FaGem, FaUser, FaSignOutAlt } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import './Navbar.css';
-import axios from './axiosConfig';
-import { AuthContext } from './context/AuthContext'; // Import AuthContext
+import axios from '../axiosConfig'; // Corrected path
+import { AuthContext } from '../context/AuthContext'; // Corrected path
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { user, setUser } = useContext(AuthContext); // Consume AuthContext
+  const { user, setUser, loading } = useContext(AuthContext); // Ensure AuthContext provides these
 
   const handleLogout = async () => {
     try {
-      await axios.post('/api/auth/logout'); // Ensure the correct API path
-      setUser(null); // Clear user from context
-      navigate('/login'); // Redirect to login page
+      await axios.post('/auth/logout'); // Ensure this endpoint exists in your backend
+      setUser(null); // Clear user state
+      navigate('/'); // Redirect to home or login page
     } catch (error) {
       console.error('Error logging out:', error);
+      // Optionally, display an error message to the user
     }
   };
+
+  if (loading) {
+    // Optionally, display a loading indicator while fetching user data
+    return <div>Loading...</div>;
+  }
 
   return (
     <motion.nav
@@ -45,16 +51,20 @@ const Navbar = () => {
               </NavLink>
             )}
           </li>
-          <li className="navbar-item">
-            <NavLink to="/bets" className="navbar-link">
-              <FaDollarSign /> Bets
-            </NavLink>
-          </li>
-          <li className="navbar-item">
-            <NavLink to="/collectibles" className="navbar-link">
-              <FaGem /> Collectibles
-            </NavLink>
-          </li>
+          {user && (
+            <>
+              <li className="navbar-item">
+                <NavLink to="/bets" className="navbar-link">
+                  <FaDollarSign /> Bets
+                </NavLink>
+              </li>
+              <li className="navbar-item">
+                <NavLink to="/collectibles" className="navbar-link">
+                  <FaGem /> Collectibles
+                </NavLink>
+              </li>
+            </>
+          )}
           {user ? (
             <li className="navbar-item">
               <motion.div

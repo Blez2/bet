@@ -7,6 +7,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AnimatePresence } from 'framer-motion';
 import { AuthProvider } from './context/AuthContext'; // Import AuthProvider
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Import CSS for react-toastify
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,6 +17,7 @@ root.render(
       <AnimatePresence mode="wait">
         <App />
       </AnimatePresence>
+      <ToastContainer /> {/* Add ToastContainer for notifications */}
     </AuthProvider>
   </React.StrictMode>
 );

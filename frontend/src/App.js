@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import Navbar from './Navbar';
+import Navbar from './components/Navbar'; // Updated path
 import Footer from './Footer';
 import BetsPage from './BetsPage';
 import UserProfilePage from './UserProfilePage';
@@ -11,8 +11,7 @@ import LandingPage from './LandingPage';
 import LoginPage from './LoginPage';
 import { AnimatePresence } from 'framer-motion';
 import './App.css';
-import { AuthProvider } from './context/AuthContext'; // Import AuthProvider
-import PrivateRoute from './components/PrivateRoute'; // Import PrivateRoute
+import PrivateRoute from './components/PrivateRoute'; // Ensure this path is correct
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -54,15 +53,13 @@ const AnimatedRoutes = () => {
 
 const App = () => {
   return (
-    <AuthProvider> {/* Wrap the app with AuthProvider */}
-      <BrowserRouter>
-        <Navbar />
-        <div className="content">
-          <AnimatedRoutes />
-        </div>
-        <Footer />
-      </BrowserRouter>
-    </AuthProvider>
+    <BrowserRouter>
+      <Navbar />
+      <div className="content">
+        <AnimatedRoutes />
+      </div>
+      <Footer />
+    </BrowserRouter>
   );
 };
 
