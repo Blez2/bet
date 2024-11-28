@@ -3,9 +3,19 @@ const { getTopArtists } = require('../services/billboardService');
 const { generateBetEvent } = require('../services/llmService');
 const BetEvent = require('../models/BetEvent');
 
+let generatedBetCount = 0; // Track how many bets have been generated
+
 cron.schedule('* * * * *', async () => {
-  // Runs every minute
   try {
+    // Check the total number of bet events in the database
+    const totalBets = await BetEvent.countDocuments({});
+
+    // Limit the total number of bet events to 10
+    if (totalBets >= 10 || generatedBetCount >= 10) {
+      console.log('Maximum number of bets generated. No more bets will be created.');
+      return;
+    }
+
     const artistsInTop100 = await getTopArtists();
 
     // Get Top 10 artists
@@ -13,39 +23,39 @@ cron.schedule('* * * * *', async () => {
 
     // Define a comprehensive list of popular artists
     const allArtists = [
-        'Taylor Swift',
-        'Drake',
-        'Kanye West',
-        'Adele',
-        'Ed Sheeran',
-        'Beyoncé',
-        'Rihanna',
-        'Justin Bieber',
-        'Bruno Mars',
-        'Katy Perry',
-        'Lady Gaga',
-        'Ariana Grande',
-        'Billie Eilish',
-        'Shawn Mendes',
-        'Sam Smith',
-        'The Weeknd',
-        'Post Malone',
-        'Dua Lipa',
-        'Harry Styles',
-        'Miley Cyrus',
-        'Nicki Minaj',
-        'Cardi B',
-        'Lil Nas X',
-        'Doja Cat',
-        'Lizzo',
-        'Halsey',
-        'Khalid',
-        'Imagine Dragons',
-        'Maroon 5',
-        'Coldplay',
-        'Ken Carson',
-        // Add more artists as needed
-      ];
+      'Taylor Swift',
+      'Drake',
+      'Kanye West',
+      'Adele',
+      'Ed Sheeran',
+      'Beyoncé',
+      'Rihanna',
+      'Justin Bieber',
+      'Bruno Mars',
+      'Katy Perry',
+      'Lady Gaga',
+      'Ariana Grande',
+      'Billie Eilish',
+      'Shawn Mendes',
+      'Sam Smith',
+      'The Weeknd',
+      'Post Malone',
+      'Dua Lipa',
+      'Harry Styles',
+      'Miley Cyrus',
+      'Nicki Minaj',
+      'Cardi B',
+      'Lil Nas X',
+      'Doja Cat',
+      'Lizzo',
+      'Halsey',
+      'Khalid',
+      'Imagine Dragons',
+      'Maroon 5',
+      'Coldplay',
+      'Ken Carson',
+      // Add more artists as needed
+    ];
 
     // Filter out artists already in the Top 10
     const eligibleArtists = allArtists.filter(
@@ -70,7 +80,7 @@ cron.schedule('* * * * *', async () => {
       return;
     }
 
-    // Calculate odds (you can implement a better logic here)
+    // Calculate odds
     const odds = {
       [betEventData.artists[0]]: 1.8,
       [betEventData.artists[1]]: 2.0,
@@ -97,6 +107,7 @@ cron.schedule('* * * * *', async () => {
     });
 
     await betEvent.save();
+    generatedBetCount++; // Increment the generated bet counter
 
     console.log('Generated new bet event:', betEvent);
   } catch (error) {

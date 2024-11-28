@@ -1,5 +1,3 @@
-/* frontend/src/BetsPage.css */
-
 .bets-page {
   background-color: #1a1a1a;
   padding: 2rem;
@@ -38,4 +36,34 @@
 .bet-item p {
   margin: 0.5rem 0;
   color: #d3d3d3; /* Light Gray */
+}
+
+.options button {
+  background-color: #4b0082; /* Indigo */
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-right: 0.5rem;
+}
+
+.options button:hover {
+  background-color: #800080; /* Purple */
+}
+
+.delete-button {
+  background-color: #ff4c4c; /* Red */
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+  background-color: #d43c3c;
 }
