@@ -2,13 +2,13 @@
 
 .navbar {
     background-color: var(--color-primary);
-    color: #fff;
+    color: var(--color-text);
     padding: var(--spacing-sm) var(--spacing-md);
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 1000;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   }
   
   .navbar-container {
@@ -25,6 +25,7 @@
     font-weight: 600;
     cursor: pointer;
     transition: transform 0.3s ease;
+    color: var(--color-text);
   }
   
   .navbar-logo:hover {
@@ -41,7 +42,7 @@
   }
   
   .navbar-link {
-    color: #fff;
+    color: var(--color-text);
     font-weight: 500;
     padding: var(--spacing-xs) var(--spacing-sm);
     border-radius: var(--radius-sm);
@@ -58,12 +59,16 @@
   
   .navbar-link.active {
     background-color: var(--color-secondary);
-    color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: var(--color-text);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   }
   
   .navbar-link svg {
     font-size: 1.2rem;
+  }
+  
+  .logout-link {
+    cursor: pointer;
   }
   
   /* Responsive Design */

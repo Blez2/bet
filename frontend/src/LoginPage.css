@@ -1,0 +1,87 @@
+/* frontend/src/LoginPage.css */
+
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--spacing-lg);
+    min-height: calc(100vh - 160px); /* Adjusted for navbar and footer */
+    background-color: #121212;
+  }
+  
+  .form-container {
+    background-color: #1a1a1a;
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+    width: 100%;
+    max-width: 400px;
+    color: var(--color-text);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+  
+  .form-container h2 {
+    text-align: center;
+    color: var(--color-primary);
+  }
+  
+  .form-container form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+  
+  .form-container label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--color-text);
+  }
+  
+  .form-container input {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid #555555;
+    border-radius: var(--radius-sm);
+    margin-top: 0.5rem;
+    background-color: #2a2a2a;
+    color: var(--color-text);
+  }
+  
+  .form-container input::placeholder {
+    color: var(--color-light-text);
+  }
+  
+  .form-container button {
+    background-color: var(--color-secondary);
+    color: var(--color-text);
+    font-weight: 600;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-sm);
+    transition: background-color var(--transition-default);
+  }
+  
+  .form-container button:hover {
+    background-color: var(--color-accent);
+  }
+  
+  .toggle-text {
+    text-align: center;
+    color: var(--color-light-text);
+    font-size: 0.9rem;
+  }
+  
+  .toggle-link {
+    color: var(--color-secondary);
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
+  .error-message {
+    color: var(--color-error);
+    text-align: center;
+    font-size: 0.9rem;
+  }
+  

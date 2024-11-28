@@ -1,10 +1,10 @@
 /* frontend/src/BetsPage.css */
 
 .bets-page {
-    background-color: #ffffff;
+    background-color: #1a1a1a;
     padding: var(--spacing-lg);
     border-radius: var(--radius-md);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
     max-width: 800px;
     margin: 0 auto;
     transition: box-shadow var(--transition-default);
@@ -14,7 +14,7 @@
   }
   
   .bets-page:hover {
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.9);
   }
   
   .bets-page h1 {
@@ -39,11 +39,11 @@
   }
   
   .bet-item {
-    background-color: #f9f9f9;
+    background-color: #2a2a2a;
     padding: var(--spacing-md);
     margin-bottom: var(--spacing-md);
     border-radius: var(--radius-sm);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     transition: transform var(--transition-default), box-shadow var(--transition-default);
     cursor: pointer;
     display: flex;
@@ -53,7 +53,7 @@
   
   .bet-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(255, 0, 255, 0.2); /* Purple shadow */
   }
   
   .bet-item p {
@@ -66,15 +66,15 @@
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
-    background-color: #f9f9f9;
+    background-color: #2a2a2a;
     padding: var(--spacing-md);
     border-radius: var(--radius-sm);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     transition: box-shadow var(--transition-default);
   }
   
   .bet-form:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(255, 0, 255, 0.2); /* Purple shadow */
   }
   
   .bet-form label {
@@ -87,22 +87,24 @@
   
   .bet-form input {
     padding: var(--spacing-xs) var(--spacing-sm);
-    border: 1px solid #ccc;
+    border: 1px solid #555555;
     border-radius: var(--radius-sm);
     margin-top: 0.5rem;
     transition: border-color var(--transition-default), box-shadow var(--transition-default);
     font-size: 1rem;
+    background-color: #1a1a1a;
+    color: var(--color-text);
   }
   
   .bet-form input:focus {
     border-color: var(--color-secondary);
-    box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+    box-shadow: 0 0 0 2px rgba(128, 0, 128, 0.5); /* Purple Shadow */
     outline: none;
   }
   
   .bet-form button {
-    background-color: var(--color-accent);
-    color: #fff;
+    background-color: var(--color-secondary);
+    color: var(--color-text);
     font-weight: 600;
     padding: var(--spacing-sm) var(--spacing-md);
     border-radius: var(--radius-sm);
@@ -110,7 +112,7 @@
   }
   
   .bet-form button:hover {
-    background-color: #059669; /* Darker Emerald */
+    background-color: var(--color-accent);
     transform: translateY(-2px);
   }
   

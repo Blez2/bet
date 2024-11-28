@@ -7,6 +7,8 @@ import Footer from './Footer';
 import BetsPage from './BetsPage';
 import UserProfilePage from './UserProfilePage';
 import CollectiblesPage from './CollectiblesPage';
+import LandingPage from './LandingPage'; // Import LandingPage
+import LoginPage from './LoginPage'; // Import LoginPage
 import { AnimatePresence } from 'framer-motion';
 import './App.css';
 
@@ -16,10 +18,12 @@ const AnimatedRoutes = () => {
   return (
     <AnimatePresence mode="wait">
       <Routes key={location.pathname} location={location}>
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/bets" element={<BetsPage />} />
         <Route path="/profile" element={<UserProfilePage />} />
         <Route path="/collectibles" element={<CollectiblesPage />} />
-        <Route path="/" element={<h1>Welcome to the React Betting App</h1>} />
+        <Route path="/" element={<LandingPage />} /> {/* Set LandingPage as Home */}
+        <Route path="*" element={<h1>404: Page Not Found</h1>} />
       </Routes>
     </AnimatePresence>
   );
