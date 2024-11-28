@@ -1,70 +1,63 @@
 // frontend/src/BetsPage.js
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from './axiosConfig';
 import './BetsPage.css';
 import { motion } from 'framer-motion';
+import { AuthContext } from './context/AuthContext';
 
 const BetsPage = () => {
-  const [bets, setBets] = useState([]);
-  const [user, setUser] = useState({});
-  const [betAmount, setBetAmount] = useState('');
-  const [betOdds, setBetOdds] = useState('');
-  const [eventId, setEventId] = useState('');
+  const [betEvents, setBetEvents] = useState([]);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const { user, setUser } = useContext(AuthContext);
 
   useEffect(() => {
-    const fetchBets = async () => {
+    const fetchBetEvents = async () => {
       try {
-        const response = await axios.get('/bets/me'); // Corrected endpoint
-        setBets(response.data);
+        const response = await axios.get('/api/bet-events');
+        setBetEvents(response.data);
       } catch (error) {
-        console.error('Error fetching bets:', error);
-        setError('Failed to fetch your bets. Please try again.');
+        console.error('Error fetching bet events:', error);
+        setError('Failed to fetch bet events.');
       }
     };
-    fetchBets();
+    fetchBetEvents();
   }, []);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axios.get('/auth/me'); // Corrected endpoint
-        setUser(response.data);
-      } catch (error) {
-        console.error('Error fetching user:', error);
-        setError('Failed to fetch user information. Please try again.');
-      }
-    };
-    fetchUser();
-  }, []);
+  const handlePlaceBet = async (eventId, option, odds) => {
+    const amountInput = prompt('Enter bet amount:');
+    if (!amountInput) return;
+    const amount = Number(amountInput);
 
-  const handlePlaceBet = async (e) => {
-    e.preventDefault();
-    setError('');
-    setSuccess('');
+    if (isNaN(amount) || amount <= 0) {
+      alert('Please enter a valid bet amount.');
+      return;
+    }
+
     try {
-      const response = await axios.post('/bets', {
-        amount: Number(betAmount),
-        odds: Number(betOdds),
-        event: eventId,
+      const response = await axios.post(`/api/bet-events/${eventId}/bets`, {
+        option,
+        amount,
       });
-      setBets([...bets, response.data]);
-      setBetAmount('');
-      setBetOdds('');
-      setEventId('');
       setSuccess('Bet placed successfully!');
+
+      // Update user balance
+      const updatedUserResponse = await axios.get('/auth/me');
+      setUser(updatedUserResponse.data);
+
+      // Clear success message after a delay
+      setTimeout(() => setSuccess(''), 3000);
     } catch (error) {
       console.error('Error placing bet:', error);
-      setError(error.response?.data?.error || 'Failed to place bet. Please try again.');
+      alert(error.response?.data?.error || 'Failed to place bet.');
     }
   };
 
   const pageVariants = {
-    initial: { opacity: 0, x: -50 },
-    in: { opacity: 1, x: 0 },
-    out: { opacity: 0, x: 50 },
+    initial: { opacity: 0, y: -20 },
+    in: { opacity: 1, y: 0 },
+    out: { opacity: 0, y: 20 },
   };
 
   const pageTransition = {
@@ -82,69 +75,34 @@ const BetsPage = () => {
       variants={pageVariants}
       transition={pageTransition}
     >
-      <h1>Bets Page</h1>
-      <h2>Welcome, {user.username}</h2>
-      
+      <h1>Available Bet Events</h1>
       {error && <p className="error-message">{error}</p>}
       {success && <p className="success-message">{success}</p>}
 
       <ul className="bets-list">
-        {bets.map((bet) => (
+        {betEvents.map((event) => (
           <motion.li
-            key={bet._id}
+            key={event._id}
             className="bet-item"
             whileHover={{ scale: 1.02, boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}
           >
-            <p><strong>Event:</strong> {bet.event?.name || 'Unknown'}</p>
-            <p><strong>Odds:</strong> {bet.odds}</p>
-            <p><strong>Amount:</strong> ${bet.amount}</p>
-            <p><strong>Status:</strong> {bet.status}</p>
+            <h2>{event.topic}</h2>
+            <p>{event.blurb}</p>
+            <div className="options">
+              {event.options.map((option) => (
+                <motion.button
+                  key={option}
+                  onClick={() => handlePlaceBet(event._id, option, event.odds[option])}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {option} (Odds: {event.odds[option]})
+                </motion.button>
+              ))}
+            </div>
           </motion.li>
         ))}
       </ul>
-      
-      <form onSubmit={handlePlaceBet} className="bet-form">
-        <label>
-          Event ID:
-          <input
-            type="text"
-            value={eventId}
-            onChange={(e) => setEventId(e.target.value)}
-            required
-            placeholder="Enter Event ID"
-          />
-        </label>
-        <label>
-          Bet Amount:
-          <input
-            type="number"
-            value={betAmount}
-            onChange={(e) => setBetAmount(e.target.value)}
-            required
-            min="1"
-            placeholder="Enter Amount"
-          />
-        </label>
-        <label>
-          Odds:
-          <input
-            type="number"
-            step="0.01"
-            value={betOdds}
-            onChange={(e) => setBetOdds(e.target.value)}
-            required
-            min="1"
-            placeholder="Enter Odds"
-          />
-        </label>
-        <motion.button
-          type="submit"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          Place Bet
-        </motion.button>
-      </form>
     </motion.div>
   );
 };

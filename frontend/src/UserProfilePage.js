@@ -1,26 +1,12 @@
 // frontend/src/UserProfilePage.js
 
-import React, { useState, useEffect } from 'react';
-import axios from './axiosConfig';
+import React, { useContext } from 'react';
 import './UserProfilePage.css';
 import { motion } from 'framer-motion';
+import { AuthContext } from './context/AuthContext';
 
 const UserProfilePage = () => {
-  const [user, setUser] = useState({});
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axios.get('/auth/me'); // Corrected endpoint
-        setUser(response.data);
-      } catch (error) {
-        console.error('Error fetching user:', error);
-        setError('Failed to fetch user information. Please try again.');
-      }
-    };
-    fetchUser();
-  }, []);
+  const { user } = useContext(AuthContext);
 
   const pageVariants = {
     initial: { opacity: 0, scale: 0.95 },
@@ -34,6 +20,10 @@ const UserProfilePage = () => {
     damping: 20,
   };
 
+  if (!user) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <motion.div
       className="user-profile-page"
@@ -43,17 +33,6 @@ const UserProfilePage = () => {
       variants={pageVariants}
       transition={pageTransition}
     >
-      {error && <p className="error-message">{error}</p>}
-      
-      {user.avatarUrl && (
-        <motion.img
-          src={user.avatarUrl}
-          alt={user.username}
-          className="user-avatar"
-          whileHover={{ scale: 1.1 }}
-          transition={{ duration: 0.3 }}
-        />
-      )}
       <h1>User Profile</h1>
       <div className="user-details">
         <p>
@@ -63,7 +42,7 @@ const UserProfilePage = () => {
           <span>Email:</span> {user.email}
         </p>
         <p>
-          <span>Balance:</span> ${user.balance}
+          <span>Balance:</span> ${user.balance.toFixed(2)}
         </p>
       </div>
     </motion.div>

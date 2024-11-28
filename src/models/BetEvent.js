@@ -7,8 +7,8 @@ const betEventSchema = new mongoose.Schema({
   options: [String], // Two artists
   blurb: String,
   odds: {
-    type: Object, // Changed from Map to Object
-    required: true,
+    type: Map,
+    of: Number, // e.g., { 'Artist A': 1.5, 'Artist B': 2.0 }
   },
   status: {
     type: String,
