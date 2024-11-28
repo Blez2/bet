@@ -6,7 +6,7 @@ const cors = require('cors');
 require('dotenv').config();
 
 // Import backend routes
-const authRouter = require('./routes/auth');
+const authRoutes = require('./routes/authRoutes'); // Updated
 const betsRouter = require('./routes/bets');
 
 const app = express();
@@ -29,7 +29,7 @@ app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(express.json());
 
 // API Routes
-app.use('/api/auth', authRouter);
+app.use('/api/auth', authRoutes); // Updated
 app.use('/api/bets', betsRouter);
 
 // Error Handling Middleware
